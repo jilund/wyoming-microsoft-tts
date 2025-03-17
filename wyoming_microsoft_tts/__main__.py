@@ -57,6 +57,11 @@ def parse_arguments():
     parser.add_argument(
         "--speaker", type=str, help="Name or id of speaker for default voice"
     )
+    parser.add_argument(
+        "--output-format",
+        type=str,
+        help="Audio output format (speechsynthesisoutputformat)",
+    )
     #
     parser.add_argument(
         "--auto-punctuation", default=".?!", help="Automatically add punctuation"

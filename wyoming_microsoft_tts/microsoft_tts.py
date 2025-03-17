@@ -1,4 +1,5 @@
 """Microsoft TTS."""
+
 import logging
 import tempfile
 import time
@@ -18,6 +19,7 @@ class MicrosoftTTS:
         """Initialize."""
         _LOGGER.debug("Initialize Microsoft TTS")
         self.args = args
+        self.output_format = args.output_format
         self.speech_config = speechsdk.SpeechConfig(
             subscription=args.subscription_key, region=args.service_region
         )
@@ -37,7 +39,10 @@ class MicrosoftTTS:
 
         # Convert the requested voice to the key microsoft use.
         self.speech_config.speech_synthesis_voice_name = self.voices[voice]["key"]
-
+        if self.output_format:
+            self.speech_config.set_speech_synthesis_output_format(
+                speechsdk.SpeechSynthesisOutputFormat[self.output_format]
+            )
         file_name = self.output_dir / f"{time.monotonic_ns()}.wav"
         audio_config = speechsdk.audio.AudioOutputConfig(filename=str(file_name))
 
